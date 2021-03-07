@@ -40,14 +40,14 @@ console.log(contents);
 Roughly yields:
 
 ```jsx
-import myImage from './image.png';
+import kittens from './kittens.png';
 
 export const hello = 'frontmatter';
 
 export default function MDXContent() {
   return (
     <p>
-      <img alt="Very cute kittens" src={myImage} title="Meow!" />
+      <img alt="Very cute kittens" src={kittens} title="Meow!" />
     </p>
   );
 }
