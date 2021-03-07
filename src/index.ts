@@ -91,7 +91,7 @@ export const remarkMdxImages: Attacher<[RemarkMdxImagesOptions?]> = ({ resolve =
     });
     (parent as Parent).children.splice(index, 1, {
       type: 'mdxJsxFlowElement',
-      name: 'img',
+      name: '_components.img',
       attributes,
       children: [],
     });
