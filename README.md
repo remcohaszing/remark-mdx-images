@@ -42,8 +42,6 @@ Roughly yields:
 ```jsx
 import kittens from './kittens.png';
 
-export const hello = 'frontmatter';
-
 export default function MDXContent() {
   return (
     <p>
