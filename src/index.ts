@@ -66,29 +66,28 @@ export const remarkMdxImages: Attacher<[RemarkMdxImagesOptions?]> = ({ resolve =
       imported.set(url, name);
     }
 
-    const attributes = [];
-    if (alt) {
-      attributes.push({ type: 'mdxJsxAttribute', name: 'alt', value: alt });
-    }
+    const attributes = [
+      { type: 'mdxJsxAttribute', name: 'alt', value: alt },
+      {
+        type: 'mdxJsxAttribute',
+        name: 'src',
+        value: {
+          type: 'mdxJsxAttributeValueExpression',
+          value: name,
+          data: {
+            estree: {
+              type: 'Program',
+              sourceType: 'module',
+              comments: [],
+              body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
+            } as Program,
+          },
+        },
+      },
+    ];
     if (title) {
       attributes.push({ type: 'mdxJsxAttribute', name: 'alt', value: title });
     }
-    attributes.push({
-      type: 'mdxJsxAttribute',
-      name: 'src',
-      value: {
-        type: 'mdxJsxAttributeValueExpression',
-        value: name,
-        data: {
-          estree: {
-            type: 'Program',
-            sourceType: 'module',
-            comments: [],
-            body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
-          } as Program,
-        },
-      },
-    });
     (parent as Parent).children.splice(index, 1, {
       type: 'mdxJsxFlowElement',
       name: '_components.img',
