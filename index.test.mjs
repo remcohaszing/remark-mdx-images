@@ -2,6 +2,7 @@ import { promises as fs, readdirSync } from 'fs';
 import { createRequire } from 'module';
 import { join } from 'path';
 
+import prettier from 'prettier';
 import test from 'tape';
 import { compile } from 'xdm';
 
@@ -19,10 +20,11 @@ tests.forEach((name) => {
       remarkPlugins: [[remarkMdxImages, options]],
       jsx: true,
     });
+    const output = prettier.format(contents, { parser: 'babel' });
     if (process.argv.includes('--write')) {
-      await fs.writeFile(expected, contents);
+      await fs.writeFile(expected, output);
     }
-    t.equal(contents, await fs.readFile(expected, 'utf8'));
+    t.equal(output, await fs.readFile(expected, 'utf8'));
     t.end();
   });
 });
