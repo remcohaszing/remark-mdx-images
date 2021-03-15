@@ -89,8 +89,8 @@ export const remarkMdxImages: Attacher<[RemarkMdxImagesOptions?]> = ({ resolve =
       attributes.push({ type: 'mdxJsxAttribute', name: 'alt', value: title });
     }
     (parent as Parent).children.splice(index, 1, {
-      type: 'mdxJsxFlowElement',
-      name: '_components.img',
+      type: 'mdxJsxTextElement',
+      name: 'img',
       attributes,
       children: [],
     });
