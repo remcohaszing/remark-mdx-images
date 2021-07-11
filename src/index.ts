@@ -1,7 +1,7 @@
-import { Program } from 'estree';
+import { MDXEsm, MDXJsxTextElement } from 'hast-util-to-estree';
 import { Image } from 'mdast';
-import { Attacher } from 'unified';
-import { Node, Parent } from 'unist';
+import { Plugin } from 'unified';
+import { Parent } from 'unist';
 import * as visit from 'unist-util-visit';
 
 export interface RemarkMdxImagesOptions {
@@ -23,77 +23,77 @@ const relativePathPattern = /\.\.?\//;
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
  */
-export const remarkMdxImages: Attacher<[RemarkMdxImagesOptions?]> = ({ resolve = true } = {}) => (
-  ast,
-) => {
-  const imports: Node[] = [];
-  const imported = new Map<string, string>();
+export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?]> =
+  ({ resolve = true } = {}) =>
+  (ast) => {
+    const imports: Omit<MDXEsm, 'value'>[] = [];
+    const imported = new Map<string, string>();
 
-  visit<Image>(ast, 'image', (node, index, parent) => {
-    let { alt, title, url } = node;
-    if (urlPattern.test(url)) {
-      return;
-    }
-    if (!relativePathPattern.test(url) && resolve) {
-      url = `./${url}`;
-    }
+    visit<Image>(ast, 'image', (node, index, parent) => {
+      let { alt = null, title, url } = node;
+      if (urlPattern.test(url)) {
+        return;
+      }
+      if (!relativePathPattern.test(url) && resolve) {
+        url = `./${url}`;
+      }
 
-    let name = imported.get(url);
-    if (!name) {
-      name = `__${imported.size}_${url.replace(/\W/g, '_')}__`;
+      let name = imported.get(url);
+      if (!name) {
+        name = `__${imported.size}_${url.replace(/\W/g, '_')}__`;
 
-      imports.push({
-        type: 'mdxjsEsm',
-        data: {
-          estree: {
-            type: 'Program',
-            sourceType: 'module',
-            body: [
-              {
-                type: 'ImportDeclaration',
-                source: { type: 'Literal', value: url, raw: JSON.stringify(url) },
-                specifiers: [
-                  {
-                    type: 'ImportDefaultSpecifier',
-                    local: { type: 'Identifier', name },
-                  },
-                ],
-              },
-            ],
-          } as Program,
-        },
-      });
-      imported.set(url, name);
-    }
-
-    const attributes = [
-      { type: 'mdxJsxAttribute', name: 'alt', value: alt },
-      {
-        type: 'mdxJsxAttribute',
-        name: 'src',
-        value: {
-          type: 'mdxJsxAttributeValueExpression',
-          value: name,
+        imports.push({
+          type: 'mdxjsEsm',
           data: {
             estree: {
               type: 'Program',
               sourceType: 'module',
-              comments: [],
-              body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
-            } as Program,
+              body: [
+                {
+                  type: 'ImportDeclaration',
+                  source: { type: 'Literal', value: url, raw: JSON.stringify(url) },
+                  specifiers: [
+                    {
+                      type: 'ImportDefaultSpecifier',
+                      local: { type: 'Identifier', name },
+                    },
+                  ],
+                },
+              ],
+            },
           },
-        },
-      },
-    ];
-    if (title) {
-      attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title });
-    }
-    (parent as Parent).children.splice(index, 1, {
-      type: 'mdxJsxTextElement',
-      name: 'img',
-      attributes,
-      children: [],
+        });
+        imported.set(url, name);
+      }
+
+      const textElement: MDXJsxTextElement = {
+        type: 'mdxJsxTextElement',
+        name: 'img',
+        children: [],
+        attributes: [
+          { type: 'mdxJsxAttribute', name: 'alt', value: alt },
+          {
+            type: 'mdxJsxAttribute',
+            name: 'src',
+            value: {
+              type: 'mdxJsxAttributeValueExpression',
+              value: name,
+              data: {
+                estree: {
+                  type: 'Program',
+                  sourceType: 'module',
+                  comments: [],
+                  body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
+                },
+              },
+            },
+          },
+        ],
+      };
+      if (title) {
+        textElement.attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title });
+      }
+      (parent as Parent).children.splice(index, 1, textElement);
     });
-  });
-  (ast as Parent).children.unshift(...imports);
-};
+    (ast as Parent).children.unshift(...imports);
+  };
