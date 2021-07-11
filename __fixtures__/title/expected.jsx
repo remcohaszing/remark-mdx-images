@@ -12,7 +12,7 @@ function MDXContent(_props) {
   const _content = (
     <>
       <_components.p>
-        <_components.img alt="" src={__0___image_png__} alt="Title" />
+        <_components.img alt="" src={__0___image_png__} title="Title" />
       </_components.p>
     </>
   );
