@@ -3,16 +3,15 @@ import __0___image_gif__ from "./image.gif";
 import __1___image_jpg__ from "./image.jpg";
 import __2___image_png__ from "./image.png";
 import __3___image_svg__ from "./image.svg";
-function MDXContent(props) {
+function _createMdxContent(props) {
   const _components = Object.assign(
-      {
-        p: "p",
-        img: "img",
-      },
-      props.components
-    ),
-    { wrapper: MDXLayout } = _components;
-  const _content = (
+    {
+      p: "p",
+      img: "img",
+    },
+    props.components
+  );
+  return (
     <>
       <_components.p>
         <_components.img alt="" src={__0___image_gif__} />
@@ -31,6 +30,15 @@ function MDXContent(props) {
       </_components.p>
     </>
   );
-  return MDXLayout ? <MDXLayout {...props}>{_content}</MDXLayout> : _content;
+}
+function MDXContent(props = {}) {
+  const { wrapper: MDXLayout } = props.components || {};
+  return MDXLayout ? (
+    <MDXLayout {...props}>
+      <_createMdxContent {...props} />
+    </MDXLayout>
+  ) : (
+    _createMdxContent(props)
+  );
 }
 export default MDXContent;

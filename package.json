@@ -2,14 +2,16 @@
   "name": "remark-mdx-images",
   "version": "1.0.3",
   "description": "A remark plugin for changing image sources to JavaScript imports using MDX",
-  "main": "dist/index.js",
+  "exports": "./index.js",
+  "type": "module",
   "files": [
-    "dist",
-    "index.html"
+    "index.js",
+    "index.d.ts"
   ],
   "scripts": {
-    "test": "ts-node index.test.mjs",
-    "prepack": "tsc --project tsconfig.build.json"
+    "start": "tsx watch test.ts",
+    "test": "c8 tsx test.ts",
+    "prepack": "tsc --noEmit false"
   },
   "author": "Remco Haszing <remcohaszing@gmail.com>",
   "license": "MIT",
@@ -27,39 +29,30 @@
     "mdx",
     "remark",
     "remark-plugin",
-    "unified",
-    "xdm"
+    "unified"
   ],
   "engines": {
-    "node": ">=12.2.0"
+    "node": ">=14.0.0"
   },
   "dependencies": {
-    "unist-util-visit": "^2.0.0"
+    "@types/mdast": "^3.0.0",
+    "unified": "^10.0.0",
+    "unist-util-visit": "^4.0.0"
   },
   "devDependencies": {
-    "@types/mdast": "^3.0.4",
-    "@typescript-eslint/eslint-plugin": "^4.28.2",
-    "@typescript-eslint/parser": "^4.28.2",
-    "eslint": "^7.30.0",
-    "eslint-config-remcohaszing": "^3.4.0",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-jest-formatting": "^2.0.1",
-    "eslint-plugin-jsdoc": "^35.4.3",
-    "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-markdown": "^2.2.0",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-sort-destructure-keys": "^1.3.5",
-    "eslint-plugin-unicorn": "^32.0.1",
-    "hast-util-to-estree": "^2.0.0",
-    "prettier": "^2.3.2",
-    "tape": "^5.2.2",
-    "ts-node": "^10.1.0",
-    "typescript": "^4.3.5",
-    "unified": "^9.2.1",
-    "xdm": "^1.12.0"
+    "@mdx-js/mdx": "^2.0.0",
+    "@types/node": "^18.0.0",
+    "@types/prettier": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "c8": "^7.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-remcohaszing": "^5.0.0",
+    "eslint-plugin-jsx-a11y": "^6.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "mdast-util-mdx": "^2.0.0",
+    "prettier": "^2.0.0",
+    "tsx": "^3.0.0",
+    "typescript": "^4.0.0",
+    "uvu": "^0.5.0"
   }
 }

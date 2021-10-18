@@ -2,4 +2,8 @@ root: true
 extends:
   - remcohaszing
 rules:
+  '@typescript-eslint/no-loop-func': off
   import/no-extraneous-dependencies: off
+  import/no-extraneous-import: off
+  import/no-unresolved: off
+  node/prefer-global/process: off

@@ -1,8 +1,7 @@
-import { MDXEsm, MDXJsxTextElement } from 'hast-util-to-estree';
-import { Image } from 'mdast';
+import { Image, Parent, Root } from 'mdast';
+import { MdxjsEsm, MdxJsxTextElement } from 'mdast-util-mdx';
 import { Plugin } from 'unified';
-import { Parent } from 'unist';
-import * as visit from 'unist-util-visit';
+import { visit } from 'unist-util-visit';
 
 export interface RemarkMdxImagesOptions {
   /**
@@ -23,13 +22,13 @@ const relativePathPattern = /\.\.?\//;
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
  */
-export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?]> =
+export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
   ({ resolve = true } = {}) =>
   (ast) => {
-    const imports: Omit<MDXEsm, 'value'>[] = [];
+    const imports: MdxjsEsm[] = [];
     const imported = new Map<string, string>();
 
-    visit<Image>(ast, 'image', (node, index, parent) => {
+    visit(ast, 'image', (node: Image, index: number | null, parent: Parent | null) => {
       let { alt = null, title, url } = node;
       if (urlPattern.test(url)) {
         return;
@@ -44,6 +43,7 @@ export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?]> =
 
         imports.push({
           type: 'mdxjsEsm',
+          value: '',
           data: {
             estree: {
               type: 'Program',
@@ -66,7 +66,7 @@ export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?]> =
         imported.set(url, name);
       }
 
-      const textElement: MDXJsxTextElement = {
+      const textElement: MdxJsxTextElement = {
         type: 'mdxJsxTextElement',
         name: 'img',
         children: [],
@@ -93,7 +93,7 @@ export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?]> =
       if (title) {
         textElement.attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title });
       }
-      (parent as Parent).children.splice(index, 1, textElement);
+      parent!.children.splice(index!, 1, textElement);
     });
-    (ast as Parent).children.unshift(...imports);
+    ast.children.unshift(...imports);
   };

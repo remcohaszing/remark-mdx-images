@@ -25,12 +25,12 @@ For example, given a file named `example.mdx` with the following contents:
 The following script:
 
 ```js
-import { readFileSync } from 'fs';
+import { readFile } from 'fs/promises';
 
+import { compile } from '@mdx-js/mdx';
 import { remarkMdxImages } from 'remark-mdx-images';
-import { compileSync } from 'xdm';
 
-const { contents } = compileSync(readFileSync('example.mdx'), {
+const { contents } = await compile(await readFile('example.mdx'), {
   jsx: true,
   remarkPlugins: [remarkMdxImages],
 });
