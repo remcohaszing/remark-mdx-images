@@ -6,7 +6,7 @@ import prettier from 'prettier';
 import { test } from 'uvu';
 import { equal } from 'uvu/assert';
 
-import { remarkMdxImages } from './index.js';
+import remarkMdxImages from './index.js';
 
 const fixturesDir = new URL('__fixtures__/', import.meta.url);
 const tests = await readdir(fixturesDir);

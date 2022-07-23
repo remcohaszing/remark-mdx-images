@@ -22,7 +22,7 @@ const relativePathPattern = /\.\.?\//;
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
  */
-export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
+const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
   ({ resolve = true } = {}) =>
   (ast) => {
     const imports: MdxjsEsm[] = [];
@@ -97,3 +97,5 @@ export const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
     });
     ast.children.unshift(...imports);
   };
+
+export default remarkMdxImages;

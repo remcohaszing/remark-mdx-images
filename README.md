@@ -30,7 +30,7 @@ The following script:
 import { readFile } from 'fs/promises';
 
 import { compile } from '@mdx-js/mdx';
-import { remarkMdxImages } from 'remark-mdx-images';
+import remarkMdxImages from 'remark-mdx-images';
 
 const { contents } = await compile(await readFile('example.mdx'), {
   jsx: true,
