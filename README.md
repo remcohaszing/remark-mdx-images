@@ -61,3 +61,7 @@ By default imports are resolved relative to the markdown file. This matches defa
 behaviour. If this is set to false, this behaviour is removed and URLs are no longer processed. This
 allows to import images from `node_modules`. If this is disabled, local images can still be imported
 by prepending the path with `./`.
+
+### License
+
+[MIT](LICENSE.md) @ [Remco Haszing](https://github.com/remcohaszing)
