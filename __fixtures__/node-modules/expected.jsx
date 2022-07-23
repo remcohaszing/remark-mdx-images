@@ -1,12 +1,12 @@
 /*@jsxRuntime automatic @jsxImportSource react*/
-import __0__browser_logos_chrome_chrome_png__ from "@browser-logos/chrome/chrome.png";
+import __0__browser_logos_chrome_chrome_png__ from '@browser-logos/chrome/chrome.png';
 function _createMdxContent(props) {
   const _components = Object.assign(
     {
-      p: "p",
-      img: "img",
+      p: 'p',
+      img: 'img',
     },
-    props.components
+    props.components,
   );
   return (
     <_components.p>

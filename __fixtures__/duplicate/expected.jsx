@@ -1,28 +1,28 @@
 /*@jsxRuntime automatic @jsxImportSource react*/
-import __0___image_png__ from "./image.png";
-import __1___image_jpg__ from "./image.jpg";
+import __0___image_png__ from './image.png';
+import __1___image_jpg__ from './image.jpg';
 function _createMdxContent(props) {
   const _components = Object.assign(
     {
-      p: "p",
-      img: "img",
+      p: 'p',
+      img: 'img',
     },
-    props.components
+    props.components,
   );
   return (
     <>
       <_components.p>
         <_components.img alt="" src={__0___image_png__} />
       </_components.p>
-      {"\n"}
+      {'\n'}
       <_components.p>
         <_components.img alt="" src={__0___image_png__} />
       </_components.p>
-      {"\n"}
+      {'\n'}
       <_components.p>
         <_components.img alt="" src={__1___image_jpg__} />
       </_components.p>
-      {"\n"}
+      {'\n'}
       <_components.p>
         <_components.img alt="" src={__1___image_jpg__} />
       </_components.p>

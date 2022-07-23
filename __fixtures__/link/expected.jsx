@@ -1,13 +1,13 @@
 /*@jsxRuntime automatic @jsxImportSource react*/
-import __0___image_png__ from "./image.png";
+import __0___image_png__ from './image.png';
 function _createMdxContent(props) {
   const _components = Object.assign(
     {
-      p: "p",
-      a: "a",
-      img: "img",
+      p: 'p',
+      a: 'a',
+      img: 'img',
     },
-    props.components
+    props.components,
   );
   return (
     <_components.p>

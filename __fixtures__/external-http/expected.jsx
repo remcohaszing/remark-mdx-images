@@ -2,10 +2,10 @@
 function _createMdxContent(props) {
   const _components = Object.assign(
     {
-      p: "p",
-      img: "img",
+      p: 'p',
+      img: 'img',
     },
-    props.components
+    props.components,
   );
   return (
     <_components.p>

@@ -1,18 +1,18 @@
 /*@jsxRuntime automatic @jsxImportSource react*/
-import __0___image_png__ from "./image.png";
+import __0___image_png__ from './image.png';
 function _createMdxContent(props) {
   const _components = Object.assign(
     {
-      p: "p",
-      img: "img",
+      p: 'p',
+      img: 'img',
     },
-    props.components
+    props.components,
   );
   return (
     <_components.p>
-      {"This is an inline image: "}
+      {'This is an inline image: '}
       <_components.img alt="" src={__0___image_png__} />
-      {". See?"}
+      {'. See?'}
     </_components.p>
   );
 }

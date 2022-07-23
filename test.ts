@@ -21,7 +21,11 @@ for (const name of tests) {
       remarkPlugins: [[remarkMdxImages, options]],
       jsx: true,
     });
-    const output = prettier.format(String(result), { parser: 'babel' });
+    const prettierConfig = await prettier.resolveConfig(expected.pathname);
+    const output = prettier.format(
+      String(result),
+      { ...prettierConfig, filepath: expected.pathname }!,
+    );
     if (process.argv.includes('--write')) {
       await writeFile(expected, output);
     }
