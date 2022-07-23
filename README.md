@@ -1,9 +1,11 @@
 # remark-mdx-images
 
-[![github actions][github actions badge]][github actions] [![npm][npm badge]][npm]
-[![prettier][prettier badge]][prettier]
+[![github actions](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml/badge.svg)](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/remark-mdx-images)](https://www.npmjs.com/package/remark-mdx-images)
+[![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
+[![codecov](https://codecov.io/gh/remcohaszing/remark-mdx-images/branch/main/graph/badge.svg)](https://codecov.io/gh/remcohaszing/remark-mdx-images)
 
-> A [remark][] plugin for changing image sources to JavaScript imports using MDX
+A [remark](https://remark.js.org) plugin for changing image sources to JavaScript imports using MDX
 
 ## Installation
 
@@ -59,12 +61,3 @@ By default imports are resolved relative to the markdown file. This matches defa
 behaviour. If this is set to false, this behaviour is removed and URLs are no longer processed. This
 allows to import images from `node_modules`. If this is disabled, local images can still be imported
 by prepending the path with `./`.
-
-[github actions badge]:
-  https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml/badge.svg
-[github actions]: https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml
-[npm badge]: https://img.shields.io/npm/v/remark-mdx-images
-[npm]: https://www.npmjs.com/package/remark-mdx-images
-[prettier badge]: https://img.shields.io/badge/code_style-prettier-ff69b4.svg
-[prettier]: https://prettier.io
-[remark]: https://remark.js.org
