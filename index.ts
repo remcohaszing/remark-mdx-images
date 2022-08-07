@@ -14,9 +14,9 @@ export interface RemarkMdxImagesOptions {
    */
   resolve?: boolean;
   /**
-   * Description Here...
+   * If the path to the image you have is under a particular folder, add your path to that option.
    *
-   * @default false
+   * @default ""
    */
   prefix?: string;
 }
