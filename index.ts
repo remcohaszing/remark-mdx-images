@@ -40,7 +40,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
         return;
       }
       if (!relativePathPattern.test(url) && resolve) {
-        url = `./${prefix ? `${prefix}/` : ''}/${url}`;
+        url = `./${prefix.length ? `${prefix}/` : ''}${url}`;
       }
 
       let name = imported.get(url);
