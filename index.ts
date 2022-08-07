@@ -13,6 +13,12 @@ export interface RemarkMdxImagesOptions {
    * @default true
    */
   resolve?: boolean;
+  /**
+   * Description Here...
+   *
+   * @default false
+   */
+  prefix?: string;
 }
 
 // eslint-disable-next-line unicorn/no-unsafe-regex
@@ -23,7 +29,7 @@ const relativePathPattern = /\.\.?\//;
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
  */
 const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
-  ({ resolve = true } = {}) =>
+  ({ resolve = true, prefix = "" } = {}) =>
   (ast) => {
     const imports: MdxjsEsm[] = [];
     const imported = new Map<string, string>();
@@ -34,7 +40,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
         return;
       }
       if (!relativePathPattern.test(url) && resolve) {
-        url = `./${url}`;
+        url = `./${prefix ?? `${prefix}/` : ""}/${url}`;
       }
 
       let name = imported.get(url);
