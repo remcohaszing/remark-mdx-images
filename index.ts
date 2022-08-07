@@ -42,7 +42,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
       }
 
       if (relativePathPattern.test(url) && prefix) {
-        url = `./${prefix ? `${prefix}/` : ''}${url.replace('./', '')}`;
+        url = `./${prefix ? `${prefix}/` : ''}${url.replace(/\.{1,2}\//, '')}`;
       }
 
       if (!relativePathPattern.test(url) && resolve) {
