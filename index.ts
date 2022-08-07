@@ -39,8 +39,13 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
       if (urlPattern.test(url)) {
         return;
       }
+
+      if (relativePathPattern.test(url) && prefix) {
+        url = `./${prefix ? `${prefix}/` : ''}${url.replace('./', '')}`;
+      }
+
       if (!relativePathPattern.test(url) && resolve) {
-        url = `./${prefix.length ? `${prefix}/` : ''}${url}`;
+        url = `./${url}`;
       }
 
       let name = imported.get(url);
