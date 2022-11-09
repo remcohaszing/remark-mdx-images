@@ -1,3 +1,6 @@
+import { join } from 'path';
+
+import { imageSize } from 'image-size';
 import { Image, Parent, Root } from 'mdast';
 import { MdxjsEsm, MdxJsxTextElement } from 'mdast-util-mdx';
 import { Plugin } from 'unified';
@@ -13,20 +16,61 @@ export interface RemarkMdxImagesOptions {
    * @default true
    */
   resolve?: boolean;
+  /**
+   * Adds the width and height attributes to the image tag.
+   *
+   * @default false
+   */
+  includeDimensions?: boolean;
+  /**
+   * The current working directory of the file being parsed. Used in combination with
+   * `includeDimensions` to load images with their specific width/height attributes.
+   */
+  cwd?: string;
 }
 
 // eslint-disable-next-line unicorn/no-unsafe-regex
 const urlPattern = /^(https?:)?\//;
 const relativePathPattern = /\.\.?\//;
+// eslint-disable-next-line unicorn/no-unsafe-regex
+const absolutePathRegex = /^(?:[a-z]+:)?\/\//;
+
+/**
+ * Gets the size of the image.
+ *
+ * @param src The image source.
+ * @returns the image dimensions
+ */
+function getImageSize(src: string):
+  | {
+      /**
+       * Width of the image.
+       */
+      width?: number;
+      /**
+       * Height of the image.
+       */
+      height?: number;
+    }
+  | undefined {
+  if (absolutePathRegex.test(src)) {
+    return undefined;
+  }
+
+  return imageSize(src);
+}
 
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
  */
 const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
-  ({ resolve = true } = {}) =>
+  ({ cwd, includeDimensions = false, resolve = true } = {}) =>
   (ast) => {
     const imports: MdxjsEsm[] = [];
     const imported = new Map<string, string>();
+    if (includeDimensions && !cwd) {
+      throw new Error('The cwd option is required when includeDimensions is enabled.');
+    }
 
     visit(ast, 'image', (node: Image, index: number | null, parent: Parent | null) => {
       let { alt = null, title, url } = node;
@@ -38,6 +82,8 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
       }
 
       let name = imported.get(url);
+      const size =
+        includeDimensions && imagesDirectory ? getImageSize(join(imagesDirectory, url)) : undefined;
       if (!name) {
         name = `__${imported.size}_${url.replace(/\W/g, '_')}__`;
 
@@ -92,6 +138,20 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
       };
       if (title) {
         textElement.attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title });
+      }
+      if (size?.width) {
+        textElement.attributes.push({
+          type: 'mdxJsxAttribute',
+          name: 'width',
+          value: String(size.width),
+        });
+      }
+      if (size?.height) {
+        textElement.attributes.push({
+          type: 'mdxJsxAttribute',
+          name: 'height',
+          value: String(size.height),
+        });
       }
       parent!.children.splice(index!, 1, textElement);
     });

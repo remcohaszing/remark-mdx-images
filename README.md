@@ -62,6 +62,17 @@ behaviour. If this is set to false, this behaviour is removed and URLs are no lo
 allows to import images from `node_modules`. If this is disabled, local images can still be imported
 by prepending the path with `./`.
 
+### `includeDimensions`
+
+It can be very useful to have the dimensions of images associated to the img tag. Including the image
+size can avoid content shift. Toggle this option on to add height/width attributes to your tags when the images
+are imported via relative import. You will also need to set `cwd` option for this to work
+
+### `cwd`
+
+The current working directory of the file being parsed. Used in combination with `includeDimensions` to load images
+with their specific width/height attributes.
+
 ### License
 
 [MIT](LICENSE.md) @ [Remco Haszing](https://github.com/remcohaszing)
