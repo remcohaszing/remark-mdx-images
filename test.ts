@@ -1,10 +1,10 @@
 import { readdir, readFile, writeFile } from 'fs/promises';
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
 import process from 'process';
 
 import { compile } from '@mdx-js/mdx';
 import prettier from 'prettier';
-import { test } from 'uvu';
-import { equal } from 'uvu/assert';
 
 import remarkMdxImages from './index.js';
 
@@ -29,8 +29,6 @@ for (const name of tests) {
     if (process.argv.includes('--write')) {
       await writeFile(expected, output);
     }
-    equal(output, await readFile(expected, 'utf8'));
+    assert.equal(output, await readFile(expected, 'utf8'));
   });
 }
-
-test.run();
