@@ -62,6 +62,10 @@ behaviour. If this is set to false, this behaviour is removed and URLs are no lo
 allows to import images from `node_modules`. If this is disabled, local images can still be imported
 by prepending the path with `./`.
 
+## Compatibility
+
+This project is compatible with Node.js 18 or greater.
+
 ### License
 
 [MIT](LICENSE.md) @ [Remco Haszing](https://github.com/remcohaszing)
