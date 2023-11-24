@@ -37,29 +37,29 @@ For example, given a file named `example.mdx` with the following contents:
 The following script:
 
 ```js
-import { readFile } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises'
 
-import { compile } from '@mdx-js/mdx';
-import remarkMdxImages from 'remark-mdx-images';
+import { compile } from '@mdx-js/mdx'
+import remarkMdxImages from 'remark-mdx-images'
 
 const { contents } = await compile(await readFile('example.mdx'), {
   jsx: true,
-  remarkPlugins: [remarkMdxImages],
-});
-console.log(contents);
+  remarkPlugins: [remarkMdxImages]
+})
+console.log(contents)
 ```
 
 Roughly yields:
 
 ```jsx
-import kittens from './kittens.png';
+import kittens from './kittens.png'
 
 export default function MDXContent() {
   return (
     <p>
       <img alt="Very cute kittens" src={kittens} title="Meow!" />
     </p>
-  );
+  )
 }
 ```
 

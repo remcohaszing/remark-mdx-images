@@ -1,8 +1,8 @@
-import { type ImportDeclaration } from 'estree';
-import { type Root } from 'mdast';
-import { type MdxJsxTextElement } from 'mdast-util-mdx';
-import { type Plugin } from 'unified';
-import { visit } from 'unist-util-visit';
+import { type ImportDeclaration } from 'estree'
+import { type Root } from 'mdast'
+import { type MdxJsxTextElement } from 'mdast-util-mdx'
+import { type Plugin } from 'unified'
+import { visit } from 'unist-util-visit'
 
 export interface RemarkMdxImagesOptions {
   /**
@@ -13,11 +13,11 @@ export interface RemarkMdxImagesOptions {
    *
    * @default true
    */
-  resolve?: boolean;
+  resolve?: boolean
 }
 
-const urlPattern = /^(https?:)?\//;
-const relativePathPattern = /\.\.?\//;
+const urlPattern = /^(https?:)?\//
+const relativePathPattern = /\.\.?\//
 
 /**
  * A Remark plugin for converting Markdown images to MDX images using imports for the image source.
@@ -25,21 +25,21 @@ const relativePathPattern = /\.\.?\//;
 const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
   ({ resolve = true } = {}) =>
   (ast) => {
-    const imports: ImportDeclaration[] = [];
-    const imported = new Map<string, string>();
+    const imports: ImportDeclaration[] = []
+    const imported = new Map<string, string>()
 
     visit(ast, 'image', (node, index, parent) => {
-      let { alt = null, title, url } = node;
+      let { alt = null, title, url } = node
       if (urlPattern.test(url)) {
-        return;
+        return
       }
       if (!relativePathPattern.test(url) && resolve) {
-        url = `./${url}`;
+        url = `./${url}`
       }
 
-      let name = imported.get(url);
+      let name = imported.get(url)
       if (!name) {
-        name = `__${imported.size}_${url.replaceAll(/\W/g, '_')}__`;
+        name = `__${imported.size}_${url.replaceAll(/\W/g, '_')}__`
 
         imports.push({
           type: 'ImportDeclaration',
@@ -47,11 +47,11 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
           specifiers: [
             {
               type: 'ImportDefaultSpecifier',
-              local: { type: 'Identifier', name },
-            },
-          ],
-        });
-        imported.set(url, name);
+              local: { type: 'Identifier', name }
+            }
+          ]
+        })
+        imported.set(url, name)
       }
 
       const textElement: MdxJsxTextElement = {
@@ -71,18 +71,18 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
                   type: 'Program',
                   sourceType: 'module',
                   comments: [],
-                  body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }],
-                },
-              },
-            },
-          },
-        ],
-      };
-      if (title) {
-        textElement.attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title });
+                  body: [{ type: 'ExpressionStatement', expression: { type: 'Identifier', name } }]
+                }
+              }
+            }
+          }
+        ]
       }
-      parent!.children.splice(index!, 1, textElement);
-    });
+      if (title) {
+        textElement.attributes.push({ type: 'mdxJsxAttribute', name: 'title', value: title })
+      }
+      parent!.children.splice(index!, 1, textElement)
+    })
 
     if (imports.length) {
       ast.children.unshift({
@@ -92,11 +92,11 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
           estree: {
             type: 'Program',
             sourceType: 'module',
-            body: imports,
-          },
-        },
-      });
+            body: imports
+          }
+        }
+      })
     }
-  };
+  }
 
-export default remarkMdxImages;
+export default remarkMdxImages
