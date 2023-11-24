@@ -1,7 +1,6 @@
-import { readdir, readFile, writeFile } from 'fs/promises';
 import assert from 'node:assert/strict';
+import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { test } from 'node:test';
-import process from 'process';
 
 import { compile } from '@mdx-js/mdx';
 import prettier from 'prettier';
@@ -22,7 +21,7 @@ for (const name of tests) {
       jsx: true,
     });
     const prettierConfig = await prettier.resolveConfig(expected.pathname);
-    const output = prettier.format(
+    const output = await prettier.format(
       String(result),
       { ...prettierConfig, filepath: expected.pathname }!,
     );

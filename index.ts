@@ -1,4 +1,4 @@
-import { Image, Parent, Root } from 'mdast';
+import {  Root } from 'mdast';
 import { MdxjsEsm, MdxJsxTextElement } from 'mdast-util-mdx';
 import { Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
@@ -28,7 +28,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
     const imports: MdxjsEsm[] = [];
     const imported = new Map<string, string>();
 
-    visit(ast, 'image', (node: Image, index: number | null, parent: Parent | null) => {
+    visit(ast, 'image', (node, index, parent) => {
       let { alt = null, title, url } = node;
       if (urlPattern.test(url)) {
         return;

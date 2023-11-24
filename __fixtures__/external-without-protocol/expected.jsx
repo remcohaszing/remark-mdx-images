@@ -1,19 +1,17 @@
 /*@jsxRuntime automatic @jsxImportSource react*/
 function _createMdxContent(props) {
-  const _components = Object.assign(
-    {
-      p: 'p',
-      img: 'img',
-    },
-    props.components,
-  );
+  const _components = {
+    img: 'img',
+    p: 'p',
+    ...props.components,
+  };
   return (
     <_components.p>
       <_components.img src="//mdx-logo.now.sh" alt="" />
     </_components.p>
   );
 }
-function MDXContent(props = {}) {
+export default function MDXContent(props = {}) {
   const { wrapper: MDXLayout } = props.components || {};
   return MDXLayout ? (
     <MDXLayout {...props}>
@@ -23,4 +21,3 @@ function MDXContent(props = {}) {
     _createMdxContent(props)
   );
 }
-export default MDXContent;

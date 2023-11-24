@@ -4,13 +4,11 @@ import __1___image_jpg__ from './image.jpg';
 import __2___image_png__ from './image.png';
 import __3___image_svg__ from './image.svg';
 function _createMdxContent(props) {
-  const _components = Object.assign(
-    {
-      p: 'p',
-      img: 'img',
-    },
-    props.components,
-  );
+  const _components = {
+    img: 'img',
+    p: 'p',
+    ...props.components,
+  };
   return (
     <>
       <_components.p>
@@ -31,7 +29,7 @@ function _createMdxContent(props) {
     </>
   );
 }
-function MDXContent(props = {}) {
+export default function MDXContent(props = {}) {
   const { wrapper: MDXLayout } = props.components || {};
   return MDXLayout ? (
     <MDXLayout {...props}>
@@ -41,4 +39,3 @@ function MDXContent(props = {}) {
     _createMdxContent(props)
   );
 }
-export default MDXContent;
