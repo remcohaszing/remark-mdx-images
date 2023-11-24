@@ -5,8 +5,7 @@
   "exports": "./index.js",
   "type": "module",
   "files": [
-    "index.js",
-    "index.d.ts"
+    "index.*"
   ],
   "scripts": {
     "start": "tsx watch test.ts",
@@ -15,13 +14,8 @@
   },
   "author": "Remco Haszing <remcohaszing@gmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/remcohaszing/remark-mdx-images.git"
-  },
-  "bugs": {
-    "url": "https://github.com/remcohaszing/remark-mdx-images/issues"
-  },
+  "repository": "remcohaszing/remark-mdx-images",
+  "bugs": "https://github.com/remcohaszing/remark-mdx-images/issues",
   "homepage": "https://github.com/remcohaszing/remark-mdx-images#readme",
   "keywords": [
     "markdown",
