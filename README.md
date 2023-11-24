@@ -1,11 +1,21 @@
 # remark-mdx-images
 
-[![github actions](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml/badge.svg)](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yml)
-[![npm](https://img.shields.io/npm/v/remark-mdx-images)](https://www.npmjs.com/package/remark-mdx-images)
-[![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io)
+[![github actions](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yaml/badge.svg)](https://github.com/remcohaszing/remark-mdx-images/actions/workflows/ci.yaml)
 [![codecov](https://codecov.io/gh/remcohaszing/remark-mdx-images/branch/main/graph/badge.svg)](https://codecov.io/gh/remcohaszing/remark-mdx-images)
+[![npm version](https://img.shields.io/npm/v/remark-mdx-images)](https://www.npmjs.com/package/remark-mdx-images)
+[![npm downloads](https://img.shields.io/npm/dm/remark-mdx-images)](https://www.npmjs.com/package/remark-mdx-images)
 
 A [remark](https://remark.js.org) plugin for changing image sources to JavaScript imports using MDX
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [API](#api)
+  - [Options](#options)
+    - [`resolve`](#resolve)
+- [Compatibility](#compatibility)
+- [License](#license)
 
 ## Installation
 
@@ -27,7 +37,7 @@ For example, given a file named `example.mdx` with the following contents:
 The following script:
 
 ```js
-import { readFile } from 'fs/promises';
+import { readFile } from 'node:fs/promises';
 
 import { compile } from '@mdx-js/mdx';
 import remarkMdxImages from 'remark-mdx-images';
@@ -53,6 +63,8 @@ export default function MDXContent() {
 }
 ```
 
+## API
+
 ### Options
 
 #### `resolve`
@@ -66,6 +78,6 @@ by prepending the path with `./`.
 
 This project is compatible with Node.js 18 or greater.
 
-### License
+## License
 
-[MIT](LICENSE.md) @ [Remco Haszing](https://github.com/remcohaszing)
+[MIT](LICENSE.md) © [Remco Haszing](https://github.com/remcohaszing)
