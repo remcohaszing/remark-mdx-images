@@ -30,6 +30,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
 
     visit(ast, 'image', (node, index, parent) => {
       let { alt = null, title, url } = node
+      url = decodeURIComponent(url)
       if (urlPattern.test(url)) {
         return
       }

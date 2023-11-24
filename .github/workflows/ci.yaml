@@ -10,8 +10,8 @@ jobs:
   eslint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
@@ -20,13 +20,13 @@ jobs:
   pack:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
       - run: npm pack
-      - uses: actions/upload-artifact
+      - uses: actions/upload-artifact@v3
         with:
           name: package
           path: '*.tgz'
@@ -34,8 +34,8 @@ jobs:
   prettier:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
@@ -44,8 +44,8 @@ jobs:
   remark:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
@@ -59,13 +59,13 @@ jobs:
           - 18
           - 20
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-node
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm test
-      - uses: codecov/codecov-action
+      - uses: codecov/codecov-action@v3
         if: ${{ matrix.node-version == 20 }}
 
   release:
@@ -78,11 +78,11 @@ jobs:
       - remark
     if: startsWith(github.ref, 'refs/tags/')
     steps:
-      - uses: actions/setup-node
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org
-      - uses: actions/download-artifact
+      - uses: actions/download-artifact@v3
         with:
           name: package
       - run: npm publish *.tgz

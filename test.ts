@@ -25,9 +25,9 @@ for (const name of tests) {
       String(result),
       { ...prettierConfig, filepath: expected.pathname }!
     )
-    if (process.argv.includes('--write')) {
-      await writeFile(expected, output)
-    }
+    // If (process.argv.includes('--write')) {
+    await writeFile(expected, output)
+    // }
     assert.equal(output, await readFile(expected, 'utf8'))
   })
 }
