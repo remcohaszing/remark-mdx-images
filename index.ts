@@ -1,6 +1,7 @@
-import {  Root } from 'mdast';
-import { MdxjsEsm, MdxJsxTextElement } from 'mdast-util-mdx';
-import { Plugin } from 'unified';
+import { type ImportDeclaration } from 'estree';
+import { type Root } from 'mdast';
+import { type MdxJsxTextElement } from 'mdast-util-mdx';
+import { type Plugin } from 'unified';
 import { visit } from 'unist-util-visit';
 
 export interface RemarkMdxImagesOptions {
@@ -15,7 +16,6 @@ export interface RemarkMdxImagesOptions {
   resolve?: boolean;
 }
 
-// eslint-disable-next-line unicorn/no-unsafe-regex
 const urlPattern = /^(https?:)?\//;
 const relativePathPattern = /\.\.?\//;
 
@@ -25,7 +25,7 @@ const relativePathPattern = /\.\.?\//;
 const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
   ({ resolve = true } = {}) =>
   (ast) => {
-    const imports: MdxjsEsm[] = [];
+    const imports: ImportDeclaration[] = [];
     const imported = new Map<string, string>();
 
     visit(ast, 'image', (node, index, parent) => {
@@ -39,29 +39,17 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
 
       let name = imported.get(url);
       if (!name) {
-        name = `__${imported.size}_${url.replace(/\W/g, '_')}__`;
+        name = `__${imported.size}_${url.replaceAll(/\W/g, '_')}__`;
 
         imports.push({
-          type: 'mdxjsEsm',
-          value: '',
-          data: {
-            estree: {
-              type: 'Program',
-              sourceType: 'module',
-              body: [
-                {
-                  type: 'ImportDeclaration',
-                  source: { type: 'Literal', value: url },
-                  specifiers: [
-                    {
-                      type: 'ImportDefaultSpecifier',
-                      local: { type: 'Identifier', name },
-                    },
-                  ],
-                },
-              ],
+          type: 'ImportDeclaration',
+          source: { type: 'Literal', value: url },
+          specifiers: [
+            {
+              type: 'ImportDefaultSpecifier',
+              local: { type: 'Identifier', name },
             },
-          },
+          ],
         });
         imported.set(url, name);
       }
@@ -95,7 +83,20 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
       }
       parent!.children.splice(index!, 1, textElement);
     });
-    ast.children.unshift(...imports);
+
+    if (imports.length) {
+      ast.children.unshift({
+        type: 'mdxjsEsm',
+        value: '',
+        data: {
+          estree: {
+            type: 'Program',
+            sourceType: 'module',
+            body: imports,
+          },
+        },
+      });
+    }
   };
 
 export default remarkMdxImages;
