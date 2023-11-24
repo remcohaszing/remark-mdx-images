@@ -1,6 +1,6 @@
 {
   "name": "remark-mdx-images",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A remark plugin for changing image sources to JavaScript imports using MDX",
   "exports": "./index.js",
   "type": "module",
