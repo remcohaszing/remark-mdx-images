@@ -51,7 +51,7 @@ const remarkMdxImages: Plugin<[RemarkMdxImagesOptions?], Root> =
               body: [
                 {
                   type: 'ImportDeclaration',
-                  source: { type: 'Literal', value: url, raw: JSON.stringify(url) },
+                  source: { type: 'Literal', value: url },
                   specifiers: [
                     {
                       type: 'ImportDefaultSpecifier',
