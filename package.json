@@ -8,9 +8,9 @@
     "index.*"
   ],
   "scripts": {
-    "start": "tsx watch test.ts",
-    "test": "c8 tsx test.ts",
-    "prepack": "tsc --noEmit false"
+    "prepack": "tsc --build",
+    "pretest": "tsc --build",
+    "test": "c8 node --test"
   },
   "author": "Remco Haszing <remcohaszing@gmail.com>",
   "license": "MIT",
@@ -41,7 +41,6 @@
     "eslint-plugin-react": "^7.0.0",
     "mdast-util-mdx": "^3.0.0",
     "prettier": "^3.0.0",
-    "tsx": "^4.0.0",
     "typescript": "^5.0.0"
   }
 }
