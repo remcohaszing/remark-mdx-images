@@ -7,7 +7,9 @@
 
 A [remark](https://remark.js.org) plugin for changing image sources to JavaScript imports using MDX
 
-> \[!WARNING] This package is deprecated in favor of
+> \[!WARNING]
+>
+> This package is deprecated in favor of
 > [`rehype-mdx-import-media`](https://github.com/remcohaszing/rehype-mdx-import-media)
 
 ## Table of Contents
